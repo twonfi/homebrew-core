@@ -6,6 +6,7 @@ class GitCola < Formula
   url "https://files.pythonhosted.org/packages/48/a3/e1e2eade3fa89e1483eff8f47aac47e76379797152d2a4f26a3f73024435/git_cola-4.10.0.tar.gz"
   sha256 "ee6b71d6cb7d3edf6b06124826b88a0a82276f6283e2463615b055d098192b07"
   license "GPL-2.0-or-later"
+  revision 1
   head "https://github.com/git-cola/git-cola.git", branch: "main"
 
   bottle do
@@ -17,7 +18,7 @@ class GitCola < Formula
   end
 
   depends_on "pyqt"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "packaging" do
     url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
