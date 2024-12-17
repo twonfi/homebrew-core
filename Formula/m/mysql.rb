@@ -37,7 +37,7 @@ class Mysql < Formula
   # std::string_view is not fully compatible with the libc++ shipped
   # with ventura, so we need to use the LLVM libc++ instead.
   on_ventura :or_older do
-    depends_on "llvm"
+    depends_on "llvm@18"
     fails_with :clang
   end
 
@@ -79,12 +79,8 @@ class Mysql < Formula
         s.gsub! ' INCLUDE REGEX "${HOMEBREW_HOME}.*")', ' INCLUDE REGEX "libabsl.*")'
       end
     elsif MacOS.version <= :ventura
-      ENV.llvm_clang
-      # Work around failure mixing newer `llvm` headers with older Xcode's libc++:
-      # Undefined symbols for architecture arm64:
-      #   "std::exception_ptr::__from_native_exception_pointer(void*)", referenced from:
-      #       std::exception_ptr std::make_exception_ptr[abi:ne180100]<std::runtime_error>(std::runtime_error) ...
-      ENV.prepend_path "HOMEBREW_LIBRARY_PATHS", Formula["llvm"].opt_lib/"c++"
+      ENV["CC"] = Formula["llvm@18"].opt_bin/"clang"
+      ENV["CXX"] = Formula["llvm@18"].opt_bin/"clang++"
     end
 
     icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
